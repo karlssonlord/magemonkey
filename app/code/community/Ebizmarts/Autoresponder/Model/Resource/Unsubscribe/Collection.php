@@ -12,6 +12,7 @@ class Ebizmarts_Autoresponder_Model_Resource_Unsubscribe_Collection extends Mage
 {
     protected function _construct()
     {
+        parent::_construct();
         $this->_init('ebizmarts_autoresponder/unsubscribe');
     }
 }

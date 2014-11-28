@@ -233,7 +233,17 @@
             </modules>
         </translate>
     </frontend>
-
+    <admin>
+        <routers>
+             <adminhtml>
+                 <args>
+                     <modules>
+                         <ebizmarts_autoresponder before="Mage_Adminhtml">Ebizmarts_Autoresponder_Adminhtml</ebizmarts_autoresponder>
+                     </modules>
+                 </args>
+             </adminhtml>
+        </routers>
+    </admin>
     <crontab>
         <jobs>
             <ebizmarts_autoresponder>

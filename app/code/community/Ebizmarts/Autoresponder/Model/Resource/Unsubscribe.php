@@ -15,4 +15,5 @@ class Ebizmarts_Autoresponder_Model_Resource_Unsubscribe extends Mage_Core_Model
         $this->_init('ebizmarts_autoresponder/unsubscribe','id');
     }
 
+
 }

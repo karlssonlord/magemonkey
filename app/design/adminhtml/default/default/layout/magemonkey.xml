@@ -1,6 +1,12 @@
 <?xml version="1.0"?>
 <layout>
 
+    <adminhtml_unsubscribe_index>
+        <reference name="content">
+            <block type="ebizmarts_autoresponder/adminhtml_unsubscribe" name="unsubscribe.log.list" />
+        </reference>
+    </adminhtml_unsubscribe_index>
+
     <adminhtml_ecommerce_apiorders>
         <reference name="content">
             <block type="monkey/adminhtml_ecommerceapi" name="ecommerceapi.list" />

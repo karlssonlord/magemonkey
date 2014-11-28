@@ -174,7 +174,7 @@ class Ebizmarts_MageMonkey_Model_Observer
 			$selectedLists = array_merge($selectedLists, $additionalLists);
 		}
 
-		$webhooksKey = Mage::helper('monkey')->getWebhooksKey($scope);
+		$webhooksKey = Mage::helper('monkey')->getWebhooksKey(""/*$scope*/);
 
 		//Generating Webhooks URL
 		$hookUrl = '';

@@ -79,13 +79,13 @@ $force = $this->getForce();
 </script>
 <div class="buttons-set"<?php if($check === 3): ?> style="display:none;"<?php endif;?>>
     <!-- General Subscription -->
-    
+    <?php $idListsSubscribed = $this->getListSuscribed($lists); 
+    if(count($idListsSubscribed) < count($lists)):?>
     <div class="page-title">
         <h1><?php echo $this->__('Newsletter Subscription'); ?></h1>
     </div>
     <?php echo $this->getBlockHtml('formkey'); ?>
-    <?php $idListsSubscribed = $this->getListSuscribed($lists); 
-    if(count($idListsSubscribed) < count($lists)):?>
+    
         <div class="monkey-multisubscribe">
             <ul class="monkey-general-list">
                 <li class="listdata"><?php echo $generalList['name']; ?>

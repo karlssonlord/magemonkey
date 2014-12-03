@@ -428,48 +428,39 @@ class Ebizmarts_MageMonkey_Block_Lists extends Mage_Core_Block_Template {
     public function listLabel($list) {
         $myLists = $this->getSubscribedLists();
 
-        //if is on database it gets checked
-        $alreadyOnList = Mage::getSingleton('monkey/asyncsubscribers')->getCollection()
-                ->addFieldToFilter('lists', $list['id'])
-                ->addFieldToFilter('email', $this->_getEmail())
-                ->addFieldToFilter('processed', 0);
-        if (count($alreadyOnList) > 0) {
-            $myLists[] = $list['id'];
+        if(!isset($list["id"])){
+            Mage::getSingleton('core/session')->addError($this->helper('monkey')->__('No lists found.'));
+        }else{
+        
+            //if is on database it gets checked
+            $alreadyOnList = Mage::getSingleton('monkey/asyncsubscribers')->getCollection()
+                    ->addFieldToFilter('lists', $list['id'])
+                    ->addFieldToFilter('email', $this->_getEmail())
+                    ->addFieldToFilter('processed', 0);
+            if (count($alreadyOnList) > 0) {
+                $myLists[] = $list['id'];
+            }
+
+            $checkbox = new Varien_Data_Form_Element_Checkbox;
+            $checkbox->setForm($this->getForm());
+            $checkbox->setHtmlId('list-' . $list['id']);
+            $checkbox->setChecked((bool) (is_array($myLists) && in_array($list['id'], $myLists)));
+            $checkbox->setTitle(($checkbox->getChecked() ? $this->__('Click to unsubscribe from this list.') : $this->__('Click to subscribe to this list.')));
+            $checkbox->setLabel($list['name']);
+
+            $hname = $this->_htmlGroupName($list);
+            $checkbox->setName($hname . '[subscribed]');
+
+            $checkbox->setValue($list['id']);
+            $checkbox->setClass('monkey-list-subscriber');
+
+
+            return $checkbox->getLabelHtml() . $checkbox->getElementHtml();
         }
-
-        $checkbox = new Varien_Data_Form_Element_Checkbox;
-        $checkbox->setForm($this->getForm());
-        $checkbox->setHtmlId('list-' . $list['id']);
-        $checkbox->setChecked((bool) (is_array($myLists) && in_array($list['id'], $myLists)));
-        $checkbox->setTitle(($checkbox->getChecked() ? $this->__('Click to unsubscribe from this list.') : $this->__('Click to subscribe to this list.')));
-        $checkbox->setLabel($list['name']);
-
-        $hname = $this->_htmlGroupName($list);
-        $checkbox->setName($hname . '[subscribed]');
-
-        $checkbox->setValue($list['id']);
-        $checkbox->setClass('monkey-list-subscriber');
-
-
-        return $checkbox->getLabelHtml() . $checkbox->getElementHtml();
     }
 
     public function getCanModify() {
         return Mage::getStoreConfig('monkey/general/changecustomergroup');
-    }
-
-    public function getListSuscribed($lists) {
-        $email = Mage::getSingleton('checkout/session')->getQuote()->getBillingAddress()->getEmail();
-
-        $listSuscribed = array();
-
-        foreach ($lists as $list) {
-            if ($this->helper('monkey')->subscribedToList($email, $list["id"])) {
-                $listSuscribed[] = $list["id"];
-            }
-        }
-
-        return $listSuscribed;
     }
 
     public function getForce() {

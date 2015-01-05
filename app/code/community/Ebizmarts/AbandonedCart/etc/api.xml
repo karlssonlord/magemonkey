@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<config>
+    <api>
+        <resources>
+            <abandonedcart translate="title" module="ebizmarts_abandonedcart">
+                <model>ebizmarts_abandonedcart/api</model>
+                <title>Abandoned Cart API</title>
+                <acl>abandonedcart/api</acl>
+                <methods>
+                    <info translate="title" module="ebizmarts_abandonedcart">
+                        <title>Abandoned Cart Info</title>
+                        <acl>abandonedcart/api/info</acl>
+                    </info>
+                </methods>
+            </abandonedcart>
+        </resources>
+        <acl>
+            <resources>
+                <abandonedcart translate="title" module="ebizmarts_abandonedcart">
+                    <title>Abandoned Cart</title>
+                    <sort_order>189</sort_order>
+                    <api translate="title" module="ebizmarts_abandonedcart">
+                        <title>AbandonedCart API</title>
+                        <info translate="title" module="ebizmarts_abandonedcart">
+                            <title>Retrieve Abandoned Cart info</title>
+                        </info>
+                    </api>
+                </abandonedcart>
+            </resources>
+        </acl>
+    </api>
+</config>

@@ -643,29 +643,33 @@ class Ebizmarts_MageMonkey_Helper_Data extends Mage_Core_Helper_Abstract
         }
 
         $mergeVars = Mage::helper('monkey')->getMergeVars($customer, $includeEmail);
+
         // add groups
         $monkeyPost = Mage::getSingleton('core/session')->getMonkeyPost();
-        $request = Mage::app()->getRequest();
-        $post = $request->getPost();
+        $request    = Mage::app()->getRequest();
+        $post       = $request->getPost();
+
         if ($monkeyPost) {
             $post = unserialize($monkeyPost);
         }
-        //if post exists && is not admin backend subscription && not footer subscription
-        $this->_checkGrouping($mergeVars,$post,$currentList, $object);
 
+        // if post exists && is not admin backend subscription && not footer subscription
+        $mergeVars = $this->_checkGrouping($mergeVars, $post, $currentList, $object);
 
         return $mergeVars;
     }
-    private function _checkGrouping($merge_vars,$post,$currentList, $object)
+    private function _checkGrouping($mergeVars,$post,$currentList, $object)
     {
         $request = Mage::app()->getRequest();
         $adminSubscription = $request->getActionName() == 'save' && $request->getControllerName() == 'customer' && $request->getModuleName() == (string)Mage::getConfig()->getNode('admin/routers/adminhtml/args/frontName');
         $footerSubscription = $request->getActionName() == 'new' && $request->getControllerName() == 'subscriber' && $request->getModuleName() == 'newsletter';
         $customerSubscription = $request->getActionName() == 'saveadditional';
         $customerCreateAccountSubscription = $request->getActionName() == 'createpost';
+
         if ($post && !$adminSubscription && !$customerSubscription && !$customerCreateAccountSubscription || Mage::getSingleton('core/session')->getIsOneStepCheckout()) {
             $defaultList = Mage::helper('monkey')->config('list');
-            //if can change customer set the groups set by customer else set the groups on MailChimp config
+
+            // if can change customer set the groups set by customer else set the groups on MailChimp config
             $canChangeGroups = Mage::getStoreConfig('monkey/general/changecustomergroup', $object->getStoreId());
             if ($currentList && ($currentList != $defaultList || $canChangeGroups && !$footerSubscription) && isset($post['list'][$currentList])) {
                 $subscribeGroups = array(0 => array());
@@ -732,6 +736,8 @@ class Ebizmarts_MageMonkey_Helper_Data extends Mage_Core_Helper_Abstract
                 $mergeVars[$map] = "Yes";
             }
         }
+
+        return $mergeVars;
     }
     /**
      * Register on Magento's registry GUEST customer data for MergeVars for on checkout subscribe

@@ -480,7 +480,7 @@ class Ebizmarts_MageMonkey_Helper_Data extends Mage_Core_Helper_Abstract
 
         return $merge_vars;
     }
-    private function _setMaps($maps,$customer,$merge_vars, $websiteId)
+    protected function _setMaps($maps,$customer,$merge_vars, $websiteId)
     {
         foreach ($maps as $map) {
             $request = Mage::app()->getRequest();
@@ -658,7 +658,7 @@ class Ebizmarts_MageMonkey_Helper_Data extends Mage_Core_Helper_Abstract
 
         return $mergeVars;
     }
-    private function _checkGrouping($mergeVars,$post,$currentList, $object)
+    protected function _checkGrouping($mergeVars,$post,$currentList, $object)
     {
         $request = Mage::app()->getRequest();
         $adminSubscription = $request->getActionName() == 'save' && $request->getControllerName() == 'customer' && $request->getModuleName() == (string)Mage::getConfig()->getNode('admin/routers/adminhtml/args/frontName');

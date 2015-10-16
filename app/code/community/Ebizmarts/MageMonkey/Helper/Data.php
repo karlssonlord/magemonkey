@@ -658,7 +658,7 @@ class Ebizmarts_MageMonkey_Helper_Data extends Mage_Core_Helper_Abstract
 
         return $mergeVars;
     }
-    protected function _checkGrouping($mergeVars,$post,$currentList, $object)
+    protected function _checkGrouping($mergeVars, $post, $currentList, $object)
     {
         $request = Mage::app()->getRequest();
         $adminSubscription = $request->getActionName() == 'save' && $request->getControllerName() == 'customer' && $request->getModuleName() == (string)Mage::getConfig()->getNode('admin/routers/adminhtml/args/frontName');
@@ -666,7 +666,7 @@ class Ebizmarts_MageMonkey_Helper_Data extends Mage_Core_Helper_Abstract
         $customerSubscription = $request->getActionName() == 'saveadditional';
         $customerCreateAccountSubscription = $request->getActionName() == 'createpost';
 
-        if ($post && !$adminSubscription && !$customerSubscription && !$customerCreateAccountSubscription || Mage::getSingleton('core/session')->getIsOneStepCheckout()) {
+        if ($post && !$adminSubscription && !$customerSubscription || Mage::getSingleton('core/session')->getIsOneStepCheckout()) {
             $defaultList = Mage::helper('monkey')->config('list');
 
             // if can change customer set the groups set by customer else set the groups on MailChimp config

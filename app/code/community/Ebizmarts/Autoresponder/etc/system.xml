@@ -117,7 +117,6 @@
                             <comment><![CDATA[The email will be sent when order gets to the selected status.]]></comment>
                             <depends>
                                 <active>1</active>
-                                <trigger separator=",">1,2</trigger>
                             </depends>
                         </order_status>
                         <subject translate="label">
